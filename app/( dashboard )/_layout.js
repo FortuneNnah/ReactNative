@@ -34,7 +34,6 @@ const DashboardLayout = () => {
               size={24}
               name={focused ? 'heart' : 'heart-outline'}
               color={focused ? "#22A55B" : "#000"}
-
             />
           )
         }} />
