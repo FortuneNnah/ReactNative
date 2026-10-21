@@ -12,7 +12,7 @@ const cards = [
 ]
 
 const navigateToNextScreen = () => {
-  router.push('/Browse')
+  router.push('/Home')
 }
 
 const About = () => {

@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 
 
-const Browse = () => {
+const Home = () => {
   return (
     <View style={styles.container}>
-      <Text>Browse</Text>
+      <Text>HOME</Text>
     </View>
   )
-}
+} 
 
-export default Browse
-
+export default Home
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,

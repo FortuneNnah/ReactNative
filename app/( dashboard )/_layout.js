@@ -14,25 +14,36 @@ const DashboardLayout = () => {
 
     }}>
       <Tabs.Screen
-        name="Browse"
+        name="Home"
         options={{
-          title: "Browse", headerShown: false, tabBarIcon: ({ focused }) => (
+          title: "Home", headerShown: false, tabBarIcon: ({ focused }) => (
             <Ionicons
               size={24}
               name={focused ? 'home' : 'home-outline'}
               color={focused ? "#22A55B" : "#000"}
-
             />
           )
         }} />
 
       <Tabs.Screen
-        name="Favorites"
+        name="Favorites" 
         options={{
           title: "Favorites", tabBarIcon: ({ focused }) => (
             <Ionicons
               size={24}
               name={focused ? 'heart' : 'heart-outline'}
+              color={focused ? "#22A55B" : "#000"}
+            />
+          )
+        }} />
+
+      <Tabs.Screen
+        name="Sell"
+        options={{
+          title: "Sell", tabBarIcon: ({ focused }) => (
+            <Ionicons
+              size={24}
+              name={focused ? 'add' : 'add-outline'}
               color={focused ? "#22A55B" : "#000"}
             />
           )
@@ -56,7 +67,7 @@ const DashboardLayout = () => {
           title: "Profile", tabBarIcon: ({ focused }) => (
             <Ionicons
               size={24}
-              name={focused ? "person-circle" : "person-circle-outline"}
+              name={focused ? "person" : "person-outline"}
               color={focused ? "#22A55B" : "#000"}
 
             />
