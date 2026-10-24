@@ -1,10 +1,8 @@
-import { StyleSheet, Text, View, Image, TextInput } from 'react-native'
-import { PawPrint } from "lucide-react-native";
-import { Bell } from "lucide-react-native";
-import { Search } from "lucide-react-native"
+import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native'
+import { PawPrint, Bell, Search, CatIcon, BirdIcon, DogIcon, DotIcon } from "lucide-react-native";
 
 const Home = () => {
-    // const LogoImage = require('../../assets/image/Vector.png')
+  // const LogoImage = require('../../assets/image/Vector.png')
 
   return (
     <View style={styles.container}>
@@ -19,50 +17,73 @@ const Home = () => {
       </View>
       <View style={styles.textInput}>
         <Search size={16} color='#6B7280' />
-        <TextInput style={styles.input} placeholder='Search for dogs, breeds, shelters...'/>
+        <TextInput style={styles.input} placeholder='Search for dogs, breeds, shelters...' />
       </View>
-      
+
+      <View styles={styles.species}>
+        <View style={styles.species}>
+          <Pressable style={styles.petIcon}>
+            <DogIcon />
+            {/* <Text>Dogs</Text> */}
+          </Pressable>
+
+          <Pressable style={styles.petIcon}>
+            <CatIcon />
+            {/* <Text>Cats</Text> */}
+          </Pressable>
+
+          <Pressable style={styles.petIcon}>
+            <BirdIcon />
+            {/* <Text>Birds</Text> */}
+          </Pressable>
+
+          <Pressable style={styles.petIcon}>
+            <Text>...</Text>
+          </Pressable>
+        </View>
+      </View>
+
     </View>
   )
-} 
+}
 
 export default Home
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
     backgroundColor: '#ffffff',
   },
-  header:{
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: 8,
   },
 
-  logoContainer:{
+  logoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
     paddingTop: 10,
   },
 
-  logoText:{
+  logoText: {
     fontFamily: 'inter',
     fontSize: 20,
     fontWeight: 700,
     color: '#000'
-  }, 
+  },
 
-  input:{
+  input: {
     // backgroundColor: '#F4F6F8'
     color: '#333',
     width: 350,
     height: 41,
   },
-  
-  textInput:{
+
+  textInput: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -73,4 +94,22 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
 
   },
+
+species: {
+  width: 390,
+  height: 61,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 20,
+},
+petIcon:{
+  width: 44,
+  height: 44,
+  backgroundColor: '#F4F6F8',
+  borderRadius: 20,
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 10,
+}
 })
