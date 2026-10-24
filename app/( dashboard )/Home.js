@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, TextInput } from 'react-native'
 import { PawPrint } from "lucide-react-native";
 import { Bell } from "lucide-react-native";
-import { P } from "lucide-react-native"
+import { Search } from "lucide-react-native"
 
 const Home = () => {
     // const LogoImage = require('../../assets/image/Vector.png')
@@ -17,6 +17,11 @@ const Home = () => {
           <Bell size={22} color="#555" />
         </View>
       </View>
+      <View style={styles.textInput}>
+        <Search size={16} color='#6B7280' />
+        <TextInput style={styles.input} placeholder='Search for dogs, breeds, shelters...'/>
+      </View>
+      
     </View>
   )
 } 
@@ -27,12 +32,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
+    backgroundColor: '#ffffff',
   },
   header:{
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 12,
+    paddingVertical: 8,
   },
 
   logoContainer:{
@@ -47,5 +53,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 700,
     color: '#000'
-  }
+  }, 
+
+  input:{
+    // backgroundColor: '#F4F6F8'
+    color: '#333',
+    width: 350,
+    height: 41,
+  },
+  
+  textInput:{
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#F4F6F8',
+    borderRadius: 12,
+    paddingHorizontal: 20,
+    paddingBottom: 4,
+
+  },
 })
