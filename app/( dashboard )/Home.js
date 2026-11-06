@@ -1,8 +1,62 @@
+import { useState, useMemo } from 'react';
 import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native'
 import { PawPrint, Bell, Search, CatIcon, BirdIcon, DogIcon, DotIcon } from "lucide-react-native";
 
+const pets = [
+  {
+    id: 1,
+    name: 'Buddy',
+    image: 'https://via.placeholder.com/150',
+    species: 'Dog',
+    breed: 'Golden Retriever',
+    age: 3,
+  },
+  {
+    id: 2,
+    name: 'Buddy',
+    image: 'https://via.placeholder.com/150',
+    species: 'Dog',
+    breed: 'Golden Retriever',
+    age: 3,
+  },
+  {
+    id: 3,
+    name: 'Buddy',
+    image: 'https://via.placeholder.com/150',
+    species: 'Dog',
+    breed: 'Golden Retriever',
+    age: 3,
+  },
+  {
+    id: 4,
+    name: 'Buddy',
+    image: 'https://via.placeholder.com/150',
+    species: 'Dog',
+    breed: 'Golden Retriever',
+    age: 3,
+  },
+]
+
 const Home = () => {
-  // const LogoImage = require('../../assets/image/Vector.png')
+  const [query, setQuery] = useState('');
+  const [species, setSpecies] = useState(null);
+
+
+  const results = useMemo(() => {
+    const q = query.trim().toLowerCase();
+
+    return pets.filter((pet) => {
+      const matchesSpecies = !species || pet.species === species;
+
+      const matchesQuery =
+        !q ||
+        pet.name.toLowerCase().includes(q) ||
+        pet.breed.toLowerCase().includes(q) ||
+        pet.shelter.toLowerCase().includes(q);
+
+      return matchesSpecies && matchesQuery;
+    });
+  }, [query, species]);
 
   return (
     <View style={styles.container}>
@@ -19,7 +73,6 @@ const Home = () => {
         <Search size={16} color='#6B7280' />
         <TextInput style={styles.input} placeholder='Search for dogs, breeds, shelters...' />
       </View>
-
       <View styles={styles.species}>
         <View style={styles.species}>
           <Pressable style={styles.petIcon}>
@@ -95,21 +148,21 @@ const styles = StyleSheet.create({
 
   },
 
-species: {
-  width: 390,
-  height: 61,
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 20,
-},
-petIcon:{
-  width: 44,
-  height: 44,
-  backgroundColor: '#F4F6F8',
-  borderRadius: 20,
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 10,
-}
+  species: {
+    width: 390,
+    height: 61,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 20,
+  },
+  petIcon: {
+    width: 44,
+    height: 44,
+    backgroundColor: '#F4F6F8',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+  }
 })

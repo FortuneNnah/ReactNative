@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import { useState } from 'react'
-import { router } from 'expo-router'
+import { router, Stack } from 'expo-router'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { ChevronLeft } from 'lucide-react-native'
 import Button from './components/Button'
-import { Checkbox} from 'expo-checkbox'
+import { Checkbox } from 'expo-checkbox'
 
 const cards = [
   { image: 'https://images.unsplash.com/vector-1741061132292-a6b38b6778dc?w=600&auto=format&fit=crop&q=60', title: 'Long hikes & adventures', description: 'High energy, active outdoor companion' },
@@ -15,6 +17,14 @@ const navigateToNextScreen = () => {
   router.push('/Home')
 }
 
+const goBack = () => {
+  if (router.canGoBack()) {
+    router.back()
+  } else {
+    router.replace('/')
+  }
+}
+
 const About = () => {
   const [selected, setSelected] = useState([])
 
@@ -25,7 +35,19 @@ const About = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+      <Stack.Screen options={{ headerShown: false }} />
+
+      <Pressable
+        onPress={goBack}
+        style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.7 }]}
+        accessibilityRole="button"
+        accessibilityLabel="Go back"
+      >
+        <ChevronLeft size={22} color="#111827" />
+        <Text style={styles.backText}>Back</Text>
+      </Pressable>
+
       <Text style={styles.head}>What does a perfect day with a cat look like?</Text>
 
       <View style={styles.content}>
@@ -59,7 +81,7 @@ const About = () => {
 
         <Button title="Next" onPress={navigateToNextScreen} />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -71,19 +93,34 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
   },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    marginTop: 8,
+    marginBottom: 16,
+    marginLeft: -6,
+    paddingVertical: 6,
+    paddingRight: 12,
+    gap: 2,
+  },
+  backText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#111827',
+  },
   head: {
     fontWeight: '700',
     fontSize: 26,
     lineHeight: 32,
     color: '#000',
     marginBottom: 7,
-    paddingTop: 12,
   },
   content: {
     flex: 1,
     justifyContent: 'space-between',
     paddingTop: 12,
-    paddingBottom: 70,
+    paddingBottom: 24,
   },
   cardsContainer: {
     gap: 5,

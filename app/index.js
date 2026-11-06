@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native'
-import { router } from 'expo-router'
+import { StyleSheet, Text, View, Image } from 'react-native'
+import { router, Stack } from 'expo-router'
 import Button from './components/Button'
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -13,40 +13,41 @@ const index = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
+      <Stack.Screen options={{ headerShown: false }} />
+
+      <Image
         source={backgroundImage}
         style={styles.backgroundImage}
         resizeMode="cover"
-      >
-        <LinearGradient
-          colors={['transparent', 'rgba(0,0,0,0.95)']}
-          locations={[0, 1]}
-          style={styles.overlay}
-        >
-          <View style={styles.overlay}>
-            <View style={styles.logo}>
-              <Image source={LogoImage} style={styles.LogoImage} />
-              <Text style={styles.logoText}>PawMatch</Text>
-            </View>
-            <Text style={styles.textcontent}>Your new best Friend is waiting.</Text>
-            <Text style={styles.description}>
-              Discover loving cats looking for a forever home and find the companion that fits your life perfectly.
-            </Text>
+      />
 
-            <View style={styles.buttonContainer}>
-              <Button
-                title="Get Started"
-                onPress={navigateToNextScreen}
-              />
-              <Button
-                title="Log In"
-                onPress={navigateToNextScreen}
-                style={styles.secondaryButton}
-              />
-            </View>
-          </View>
-        </LinearGradient>
-      </ImageBackground>
+      {/* Dark fade behind the text, separate from the content */}
+      <LinearGradient
+        colors={['transparent', 'rgba(0,0,0,0.9)']}
+        style={styles.gradient}
+        pointerEvents="none"
+      />
+
+      {/* Content pinned to the bottom */}
+      <View style={styles.content}>
+        <View style={styles.logo}>
+          <Image source={LogoImage} style={styles.LogoImage} />
+          <Text style={styles.logoText}>PawMatch</Text>
+        </View>
+        <Text style={styles.textcontent}>Your new best Friend is waiting.</Text>
+        <Text style={styles.description}>
+          Discover loving cats looking for a forever home and find the companion that fits your life perfectly.
+        </Text>
+
+        <View style={styles.buttonContainer}>
+          <Button title="Get Started" onPress={navigateToNextScreen} />
+          <Button
+            title="Log In"
+            onPress={navigateToNextScreen}
+            style={styles.secondaryButton}
+          />
+        </View>
+      </View>
     </View>
   )
 }
@@ -56,23 +57,34 @@ export default index
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000',
   },
 
   backgroundImage: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
   },
 
-  overlay: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'stretch',
-    paddingHorizontal: 10,
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '60%',
+  },
+
+  content: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    paddingHorizontal: 20,
     paddingBottom: 40,
   },
 
   logo: {
     marginBottom: 10,
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
@@ -85,14 +97,12 @@ const styles = StyleSheet.create({
   },
 
   logoText: {
-    fontFamily: 'inter',
     fontSize: 22,
-    fontWeight: 700,
-    color: '#fff'
+    fontWeight: '700',
+    color: '#fff',
   },
 
   textcontent: {
-    width: '100%',
     fontSize: 34,
     lineHeight: 42,
     fontWeight: '800',
@@ -102,7 +112,6 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    width: '100%',
     fontSize: 16,
     lineHeight: 24,
     color: '#e5e7eb',
@@ -114,8 +123,8 @@ const styles = StyleSheet.create({
   },
 
   secondaryButton: {
-    backgroundColor: "transparent",
-    borderColor: "#fff",
+    backgroundColor: 'transparent',
+    borderColor: '#fff',
     borderWidth: 2,
-  }
+  },
 })
