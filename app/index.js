@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import {
   ImageBackground,
   Pressable,
@@ -11,6 +12,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { PawPrint } from 'lucide-react-native'
 import { StatusBar } from 'expo-status-bar'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { BlurTargetView, BlurView } from 'expo-blur'
 
 // Overlay stops: [position from the top of the screen (0 to 1), black opacity (0 to 1)].
 // Measured from the reference design. Change OVERLAY_STRENGTH to make the whole overlay lighter (below 1) or darker (above 1).
@@ -41,71 +43,83 @@ const OVERLAY_LOCATIONS = OVERLAY_STOPS.map(([position]) => position)
 
 const Index = () => {
   const insets = useSafeAreaInsets()
+  const blurTarget = useRef(null)
 
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <StatusBar style="light" translucent />
 
-      <ImageBackground
-        source={require('../assets/image/Dog6.jpg')}
-        style={styles.background}
-        resizeMode="cover"
+      <BlurTargetView ref={blurTarget} style={StyleSheet.absoluteFill}>
+        <ImageBackground
+          source={require('../assets/image/Dog6.jpg')}
+          style={styles.background}
+          resizeMode="cover"
+        >
+          {/* Single black overlay: darker at the top, clear on the face, darker toward the bottom */}
+          <LinearGradient
+            pointerEvents="none"
+            colors={OVERLAY_COLORS}
+            locations={OVERLAY_LOCATIONS}
+            start={{ x: 0.5, y: 0 }}
+            end={{ x: 0.5, y: 1 }}
+            style={StyleSheet.absoluteFill}
+          />
+        </ImageBackground>
+      </BlurTargetView>
+
+      <BlurView
+        blurTarget={blurTarget}
+        blurMethod="dimezisBlurView"
+        intensity={20}
+        tint="light"
+        style={[styles.logoBlur, { top: insets.top + 30 }]}
       >
-        {/* Single black overlay: darker at the top, clear on the face, darker toward the bottom */}
-        <LinearGradient
-          pointerEvents="none"
-          colors={OVERLAY_COLORS}
-          locations={OVERLAY_LOCATIONS}
-          start={{ x: 0.5, y: 0 }}
-          end={{ x: 0.5, y: 1 }}
-          style={StyleSheet.absoluteFill}
-        />
-          <View style={styles.logo}>
-            <PawPrint size={38} color="#22A55B" /><Text style={styles.logoText}>PawMatch</Text>
-          </View>
-
-
-        <View style={[styles.content, { paddingBottom: insets.bottom + 16 }]}>
-          <View style={styles.copy}>
-            <Text style={styles.headline} accessibilityRole="header">
-             Your new best friend is waiting.
-            </Text>
-            <Text style={styles.subtitle}>
-              Discover loving dogs looking for a forever home and find the
-              companion that fits your life perfectly.
-            </Text>
-          </View>
-
-          <View style={styles.buttons}>
-            <Button
-              title="Get Started"
-              onPress={() => router.push('/SignUp')}
-              variant="primary"
-              style={styles.primaryButton}
-              textStyle={styles.buttonText1}
-            />
-            <Button
-              title="Log In"
-              onPress={() => router.push('/SignIn')}
-              variant="outline"
-              style={styles.outlineButton}
-              textStyle={styles.buttonText2}
-            />
-          </View>
-
-          <View style={styles.signUpRow}>
-            <Text style={styles.signUpText}>Don't have an account? </Text>
-            <Pressable
-              accessibilityRole="button"
-              onPress={() => router.push('/SignUp')}
-              style={styles.signUpButton}
-            >
-              <Text style={styles.signUpLink}>Sign Up</Text>
-            </Pressable>
-          </View>
+        <View style={styles.logo}>
+          <PawPrint width={28} color="#22A55B" />
+          <Text style={styles.logoText}>PawMatch</Text>
         </View>
-      </ImageBackground>
+      </BlurView>
+
+      <View style={[styles.content, { paddingBottom: insets.bottom + 16 }]}>
+        <View style={styles.copy}>
+          <Text style={styles.headline} accessibilityRole="header">
+            Your new best friend is waiting.
+          </Text>
+          <Text style={styles.subtitle}>
+            Discover loving dogs looking for a forever home and find the
+            companion that fits your life perfectly.
+          </Text>
+        </View>
+
+        <View style={styles.buttons}>
+          <Button
+            title="Get Started"
+            onPress={() => router.push('/SignUp')}
+            variant="primary"
+            style={styles.primaryButton}
+            textStyle={styles.buttonText1}
+          />
+          <Button
+            title="Log In"
+            onPress={() => router.push('/SignIn')}
+            variant="outline"
+            style={styles.outlineButton}
+            textStyle={styles.buttonText2}
+          />
+        </View>
+
+        <View style={styles.signUpRow}>
+          <Text style={styles.signUpText}>Don't have an account? </Text>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => router.push('/SignUp')}
+            style={styles.signUpButton}
+          >
+            <Text style={styles.signUpLink}>Sign Up</Text>
+          </Pressable>
+        </View>
+      </View>
     </View>
   )
 }
@@ -121,22 +135,31 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  logo:{
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingTop: 10,
-    paddingLeft: 20,
-    marginTop: 30,
-    height: 88,
-    width: 350,
+  // Positioned blur panel for the logo row.
+  logoBlur: {
+    position: 'absolute',
+    top: 10,
+    left: 20,
+    right: 20,
+    borderRadius: 50,
+    overflow: 'hidden',
+    justifyContent: 'center',
   },
 
-  logoText:{
+  logo: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 4,
+    height: 52,
+    padding: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.01)',
+    gap: 8,
+  },
+
+  logoText: {
     color: '#ffffff',
     fontFamily: 'inter',
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 700
   },
   // Bottom-anchored landing copy, pagination, and calls to action.
@@ -150,7 +173,7 @@ const styles = StyleSheet.create({
     marginVertical: 40,
     paddingHorizontal: 20,
     borderRadius: 28,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fffcfc',
     height: 387,
   },
   // Headline and supporting copy spacing.
@@ -185,7 +208,7 @@ const styles = StyleSheet.create({
     height: 52,
     borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: 'rgba(0, 0, 0, 0.85)',
+    borderColor: '#22A55B',
     color: 'rgba(0, 0, 0, 0.85)',
     paddingVertical: 12,
 
