@@ -52,7 +52,7 @@ const Index = () => {
 
       <BlurTargetView ref={blurTarget} style={StyleSheet.absoluteFill}>
         <ImageBackground
-          source={{uri: 'https://images.unsplash.com/photo-1601979031925-424e53b6caaa?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D'}}
+          source={{uri: 'https://images.unsplash.com/photo-1591946559594-8c6d3b7391eb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D'}}
           style={styles.background}
           resizeMode="cover"
         >
@@ -84,7 +84,7 @@ const Index = () => {
       <View style={[styles.content, { paddingBottom: insets.bottom + 16 }]}>
         <View style={styles.copy}>
           <Text style={styles.headline} accessibilityRole="header">
-            Your new best friend is waiting.
+            Find your forever friend.
           </Text>
           <Text style={styles.subtitle}>
             Discover loving dogs looking for a forever home and find the
@@ -95,7 +95,7 @@ const Index = () => {
         <View style={styles.buttons}>
           <Button
             title="Get Started"
-            onPress={() => router.push('/SignUp')}
+            onPress={() => router.push('/About')}
             variant="primary"
             style={styles.primaryButton}
             textStyle={styles.buttonText1}
@@ -173,23 +173,24 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     justifyContent: 'flex-end',
-    marginHorizontal: 20,
-    marginVertical: 40,
-    paddingHorizontal: 20,
+    marginHorizontal: 0,
+    // marginVertical: 50,
+    padding: 20,
     backgroundColor: '#fffcfc',
     borderRadius: 28,
-    height: 387,
+    // height: 370,
   },
   // Headline and supporting copy spacing.
   copy: {
     marginTop: 16,
   },
   headline: {
-    maxWidth: 300,
+    maxWidth: 360,
     color: '#000000',
     fontSize: 30,
     lineHeight: 36,
     fontWeight: '700',
+    // textAlign: 'center',
   },
   subtitle: {
     marginTop: 12,
