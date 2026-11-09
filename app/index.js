@@ -52,7 +52,7 @@ const Index = () => {
 
       <BlurTargetView ref={blurTarget} style={StyleSheet.absoluteFill}>
         <ImageBackground
-          source={require('../assets/image/Dog6.jpg')}
+          source={{uri: 'https://images.unsplash.com/photo-1601979031925-424e53b6caaa?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D'}}
           style={styles.background}
           resizeMode="cover"
         >
@@ -153,6 +153,10 @@ const styles = StyleSheet.create({
     height: 52,
     padding: 12,
     backgroundColor: 'rgba(255, 255, 255, 0.01)',
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderWidth: 1,
+    borderRadius: 50,
+    alignItems: 'center',
     gap: 8,
   },
 
@@ -172,8 +176,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 40,
     paddingHorizontal: 20,
-    borderRadius: 28,
     backgroundColor: '#fffcfc',
+    borderRadius: 28,
     height: 387,
   },
   // Headline and supporting copy spacing.
